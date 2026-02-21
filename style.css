@@ -10,11 +10,17 @@
   font-family:'Poppins',sans-serif;
 }
 
-body{
+html{
   background:
     radial-gradient(circle at 10% 20%, rgba(166,255,0,0.05), transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(166,255,0,0.04), transparent 40%),
     #0b0b0f;
+}
+
+body{
+  max-width:1640px;
+  margin:0 auto;
+  background:transparent;
   color:#fff;
 }
 
@@ -34,7 +40,7 @@ header{
   top:0;
   background:rgba(11,11,15,0.9);
   backdrop-filter:blur(8px);
-  z-index:1000;
+  z-index:1100;
   border-bottom:1px solid rgba(255,255,255,0.06);
   box-shadow: 0 6px 20px rgba(166,255,0,0.15);
 }
@@ -42,7 +48,6 @@ header{
 .logo img{
   height:65px;
   width:auto;
-  
 }
 
 .logo img:hover{
@@ -54,7 +59,8 @@ header{
 nav{
   display:flex;
   align-items:center;
-  gap:40px;
+  gap:25px;
+  margin-left: auto;
 }
 
 nav a{
@@ -165,7 +171,7 @@ nav a:hover::after{
   position:relative;
   width:480px;
   height:550px;
-  margin-left:auto;
+  margin: 0 auto;
   animation: float 4s ease-in-out infinite;
 }
 
@@ -177,6 +183,7 @@ nav a:hover::after{
 
 .hero-image .img{
   position:absolute;
+  left: 0;
   width:100%;
   height:100%;
   object-fit:contain;
@@ -213,6 +220,7 @@ nav a:hover::after{
     grid-template-columns:1fr;
     text-align:center;
     gap:50px;
+    justify-items:center;
   }
 
   .hero p{
@@ -225,7 +233,7 @@ nav a:hover::after{
   }
 
   .hero-image{
-    margin:0 auto;
+    justify-self: center;
     width:350px;
     height:450px;
   }
@@ -422,20 +430,12 @@ section:not(.footer)::after{
   }
 
   .about-highlights{
-    padding-left:0;
+    padding-left:45px;
     gap:30px;
   }
 
-  .about-highlights::before{
-    display:none;
-  }
-
-  .highlight::before{
-    display:none;
-  }
-
   .highlight{
-    text-align:center;
+    text-align:left;
   }
 }
 
@@ -503,10 +503,6 @@ section:not(.footer)::after{
 .skill-info i {
   margin-right: 6px;
   color: #a6ff00;
-}
-
-.percent {
-  color: #ffffff;
 }
 
 /* PROGRESS BAR */
@@ -944,23 +940,22 @@ section:not(.footer)::after{
   }
 
   .footer-container{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 1fr;
     text-align:center;
+  }
+
+  .footer-left{
+    grid-column: 1 / -1;
   }
 
   .footer p{
     margin:auto;
   }
 
-  .hero{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
   .hero-image{
-    margin:40px auto 0;
     width:280px;
     height:380px;
+    justify-self: center;
   }
 
   nav{
@@ -1004,4 +999,269 @@ section:not(.footer)::after{
 .reveal.active{
   opacity:1;
   transform:translateY(0);
+}
+
+/* ================= HAMBURGER BUTTON ================= */
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: 2px solid #a6ff00;
+  border-radius: 8px;
+  color: #a6ff00;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1200;
+}
+
+.hamburger:hover {
+  background: #a6ff00;
+  color: #000;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 25px;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ================= TABLET / MOBILE NAV (≤ 960px) ================= */
+
+@media (max-width: 960px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(11,11,15,0.97);
+    backdrop-filter: blur(14px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 38px;
+    z-index: 1050;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    padding: 30px 5%;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  /* --- FOOTER CTA --- */
+  .footer-cta h2 {
+    font-size: 28px;
+  }
+
+  .footer-cta .btn {
+    font-size: 16px;
+    padding: 10px 22px;
+  }
+
+  /* --- CONTACT DROPDOWN (bottom sheet on mobile) --- */
+  .contact-dropdown {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.3s ease forwards;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* --- ABOUT STATS --- */
+  .about-stats {
+    justify-content: center;
+  }
+
+  /* --- PROJECT CARDS --- */
+  .project-card {
+    min-width: 300px;
+    padding: 30px;
+  }
+
+  /* --- SCROLL TO TOP --- */
+  #scrollTopBtn {
+    bottom: 20px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
+}
+
+/* ================= SMALL MOBILE (≤ 480px) ================= */
+
+@media (max-width: 480px) {
+
+  /* --- HEADER --- */
+  header {
+    padding: 8px 4%;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    padding: 25px 4%;
+    gap: 30px;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    letter-spacing: 0;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero .buttons a {
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
+  }
+
+  .hero-image {
+    width: 240px;
+    height: 300px;
+  }
+
+  /* --- SECTION TITLE --- */
+  .title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* --- COMMON SECTION PADDING --- */
+  section {
+    padding: 24px 4%;
+  }
+
+  /* --- ABOUT --- */
+  .about {
+    padding: 24px 4%;
+  }
+
+  .about-text h3 {
+    font-size: 18px;
+  }
+
+  .about-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  /* --- SKILLS --- */
+  .skills-section {
+    padding: 24px 4%;
+  }
+
+  .skill-card {
+    padding: 24px;
+  }
+
+  /* --- ACHIEVEMENTS --- */
+  .achievements {
+    padding: 24px 4%;
+  }
+
+  .achievement-card {
+    padding: 22px;
+  }
+
+  /* --- EXPERIENCE --- */
+  .experience {
+    padding: 24px 4%;
+  }
+
+  .experience-card {
+    padding: 22px;
+  }
+
+  /* --- UPCOMING PROJECTS --- */
+  .upcoming {
+    padding: 24px 4%;
+  }
+
+  .project-card {
+    min-width: 260px;
+    padding: 24px;
+  }
+
+  /* --- FOOTER --- */
+  .footer {
+    padding: 35px 4% 20px;
+  }
+
+  .footer-cta h2 {
+    font-size: 20px;
+  }
+
+  .footer-cta {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    gap: 20px;
+  }
+
+  .footer-container {
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+  }
+
+  /* --- SCROLL TO TOP --- */
+  #scrollTopBtn {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    bottom: 16px;
+    right: 16px;
+  }
 }

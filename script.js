@@ -2,6 +2,39 @@
 /*==============Home Page Logic=====================*/
 /*==================================================*/
 
+/* ================= HAMBURGER MENU ================= */
+
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.querySelector("nav");
+
+if (hamburger && navMenu) {
+
+  hamburger.addEventListener("click", function (e) {
+    e.stopPropagation();
+    navMenu.classList.toggle("open");
+    hamburger.innerHTML = navMenu.classList.contains("open") ? "&#10005;" : "&#9776;";
+    document.body.style.overflow = navMenu.classList.contains("open") ? "hidden" : "";
+  });
+
+  // Close when a nav link is clicked
+  navMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navMenu.classList.remove("open");
+      hamburger.innerHTML = "&#9776;";
+      document.body.style.overflow = "";
+    });
+  });
+
+  // Close when clicking outside nav / header
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("header")) {
+      navMenu.classList.remove("open");
+      hamburger.innerHTML = "&#9776;";
+      document.body.style.overflow = "";
+    }
+  });
+}
+
 
 /* ================= IMAGE SLIDER ================= */
 
@@ -9,17 +42,19 @@ const images = ["Photos/garv1.png", "Photos/garv2.jpeg"];
 let index = 0;
 const mainImg = document.getElementById("mainImg");
 
-setInterval(() => {
-  index = (index + 1) % images.length;
+if (mainImg) {
+  setInterval(() => {
+    index = (index + 1) % images.length;
 
-  mainImg.style.opacity = 0;
+    mainImg.style.opacity = 0;
 
-  setTimeout(() => {
-    mainImg.src = images[index];
-    mainImg.style.opacity = 1;
-  }, 750);
+    setTimeout(() => {
+      mainImg.src = images[index];
+      mainImg.style.opacity = 1;
+    }, 750);
 
-}, 10000);
+  }, 10000);
+}
 
 
 /* ================= SMOOTH SCROLL ================= */
@@ -39,68 +74,70 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const toggleBtn = document.getElementById("contactToggleBtn");
 const dropdown = document.getElementById("contactDropdown");
 
-toggleBtn.addEventListener("click", function(e) {
-  e.stopPropagation();
-  dropdown.style.display =
-    dropdown.style.display === "block" ? "none" : "block";
-});
+if (toggleBtn && dropdown) {
 
-// Close when clicking outside
-document.addEventListener("click", function(e) {
-  if (!e.target.closest(".contact-wrapper")) {
-    dropdown.style.display = "none";
-  }
-});
+  toggleBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Close when clicking outside
+  document.addEventListener("click", function(e) {
+    if (!e.target.closest(".contact-wrapper")) {
+      dropdown.style.display = "none";
+    }
+  });
+}
 
 
 /* ================= NETLIFY FORM SUBMIT ================= */
 
 const form = document.getElementById("netlifyContactForm");
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+if (form) {
 
-  const formData = new FormData(form);
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-  fetch("/", {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    const popup = document.getElementById("formSuccessPopup");
+    const formData = new FormData(form);
 
-    popup.classList.remove("hidden");
-    form.reset();
+    fetch("/", {
+      method: "POST",
+      body: formData
+    })
+    .then(() => {
+      const popup = document.getElementById("formSuccessPopup");
 
-    // Close dropdown after success
-    dropdown.style.display = "none";
+      if (popup) popup.classList.remove("hidden");
+      form.reset();
 
-    setTimeout(() => {
-      popup.classList.add("hidden");
-    }, 3000);
-  })
-  .catch(() => alert("Form submission failed"));
-});
+      // Close dropdown after success
+      if (dropdown) dropdown.style.display = "none";
+
+      setTimeout(() => {
+        if (popup) popup.classList.add("hidden");
+      }, 3000);
+    })
+    .catch(() => alert("Form submission failed"));
+  });
+}
 
 
 /* ================= SCROLL TO TOP BUTTON ================= */
 
 const scrollBtn = document.getElementById("scrollTopBtn");
 
-window.addEventListener("scroll", function() {
-  if (window.scrollY > 300) {
-    scrollBtn.style.display = "block";
-  } else {
-    scrollBtn.style.display = "none";
-  }
-});
+if (scrollBtn) {
 
-scrollBtn.addEventListener("click", function() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  window.addEventListener("scroll", function() {
+    scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
   });
-});
+
+  scrollBtn.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 
 /* ================= INFINITE SLIDER ================= */
 
@@ -117,7 +154,7 @@ if (slider) {
   });
 
   let position = 0;
-  let speed = 0.5;
+  const speed = 0.5;
   let paused = false;
 
   slider.addEventListener("mouseenter", () => paused = true);
