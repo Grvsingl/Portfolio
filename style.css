@@ -1124,7 +1124,20 @@ section:not(.footer)::after{
   }
 }
 
-/* ================= SMALL MOBILE (≤ 480px) ================= */
+/* ================= VERY SMALL MOBILE (< 380px) ================= */
+
+@media (max-width: 379px) {
+  .header-right .btn {
+    display: none;
+  }
+}
+
+/* Hide the in-nav Contact link on larger screens (shown only in hamburger overlay) */
+@media (min-width: 380px) {
+  nav .nav-contact {
+    display: none;
+  }
+}
 
 @media (max-width: 480px) {
 
